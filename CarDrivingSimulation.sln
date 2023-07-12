@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CarDrivingSimulation", "CarDrivingSimulation\CarDrivingSimulation.vcxproj", "{EDC04E52-848E-42E7-9F03-D3261CAAB39A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDC04E52-848E-42E7-9F03-D3261CAAB39A}.Debug|x64.ActiveCfg = Debug|x64
+		{EDC04E52-848E-42E7-9F03-D3261CAAB39A}.Debug|x64.Build.0 = Debug|x64
+		{EDC04E52-848E-42E7-9F03-D3261CAAB39A}.Debug|x86.ActiveCfg = Debug|Win32
+		{EDC04E52-848E-42E7-9F03-D3261CAAB39A}.Debug|x86.Build.0 = Debug|Win32
+		{EDC04E52-848E-42E7-9F03-D3261CAAB39A}.Release|x64.ActiveCfg = Release|x64
+		{EDC04E52-848E-42E7-9F03-D3261CAAB39A}.Release|x64.Build.0 = Release|x64
+		{EDC04E52-848E-42E7-9F03-D3261CAAB39A}.Release|x86.ActiveCfg = Release|Win32
+		{EDC04E52-848E-42E7-9F03-D3261CAAB39A}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {35E1F4D3-7257-4A2D-BFF0-2DD4ECE9F60E}
+	EndGlobalSection
+EndGlobal
