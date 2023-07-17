@@ -7,10 +7,7 @@
 using namespace std;
 
 /*TODO:
-Speed needs to be in MPH (3600 seconds / hr)
-Position needs to be in feet (5280 ft/mile)
-After velocity/position units are updated, test max velocity of the car again to about 200 mph
-Wind resistance and friction is way too strong.  Needs to be reduced.
+
 */
 
 int main() {
