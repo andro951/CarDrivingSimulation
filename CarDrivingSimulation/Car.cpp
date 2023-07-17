@@ -57,12 +57,14 @@ void Car::Update(const float secondsSinceLastUpdate) {
     UpdateCarPositionAndFacingDirection(secondsSinceLastUpdate);
 
     //Update the velocity after the position to have a small amount of lag to help simulate inertia.
-    UpdateSpeed(secondsSinceLastUpdate);
+    UpdateVelocity(secondsSinceLastUpdate);
 
     DoUpdateLogs();
 }
 void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate) {
-    float distance = velocity * secondsSinceLastUpdate;
+    //distance is in feet.  velocity is in miles per hour.  secondsSinceLastUpdate is in seconds.
+    //distance = velocity * secondsSinceLastUpdate * 5280 feet per mile * 1 hour per 3600 seconds
+    float distance = velocity * secondsSinceLastUpdate * 5280.0f / 3600.0f;
     float axleDistance = GetAxleDistance();
     float turningAngle = GetTurningAngle();
 
@@ -100,7 +102,7 @@ void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate
     position.second += changeInY;
     SetFacingDirection(GetFacingDirection() + turnAngle);
 }
-void Car::UpdateSpeed(const float secondsSinceLastUpdate) {
+void Car::UpdateVelocity(const float secondsSinceLastUpdate) {
     float acceleration = GetAcceleration(secondsSinceLastUpdate);
     velocity += acceleration * secondsSinceLastUpdate;
 }

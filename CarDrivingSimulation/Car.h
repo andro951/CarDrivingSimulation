@@ -88,7 +88,7 @@ public:
 
 private:
     void UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate);
-    void UpdateSpeed(const float secondsSinceLastUpdate);
+    void UpdateVelocity(const float secondsSinceLastUpdate);
 
 public:
     /// <summary>
