@@ -69,18 +69,18 @@ void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate
     float turningAngle = GetTurningAngle();
 
     //When a car turns, it turns in a circle.
-    //turnDiameter is the diameter of that circle.
-    float turnDiameter = axleDistance * 2 * PI / turningAngle;
+    //turnCircumference is the circumference of that circle.
+    float turnCircumference = axleDistance * 2 * PI / turningAngle;
 
     //turnFraction is the fraction of the whole turn circle that the car turns in this update tick.
-    float turnFraction = distance / turnDiameter;
+    float turnFraction = distance / turnCircumference;
 
     //turnAngle is the angle at the center of the turn circle.  The right triangle is formed with the hypotenuse from the center of the circle
     //to the car's new position, and the adjacent side is the car's old position minus the relative change in x.
     float turnAngle = turnFraction * 2 * PI;
 
     //turnRadius is the radius of the turn circle.
-    float turnRadius = turnDiameter / PI;
+    float turnRadius = turnCircumference / PI;
 
     //relativeChangeInX and relativeChangeInY are the change in x and y relative to the car's old position.
     //They are calculated assuming the car's facing direction is 0, so they must be rotated to match the car's actual facing direction.
