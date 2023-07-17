@@ -126,13 +126,13 @@ float Car::GetAcceleration(const float secondsSinceLastUpdate) {
     float newSpeedAccelerationOnly = speed + speedFromAcceleration;
 
     if (newSpeedAccelerationOnly != 0) {
-        float accelerationSign = acceleration >= 0 ? 1 : -1;
+        float accelerationSign = acceleration >= 0.0f ? 1.0f : -1.0f;
 
         //Invert acceleration if acceleration is negative.
         acceleration *= accelerationSign;
 
         //Wind resistance and friction.
-        float deceleration = speed * 0.25;
+        float deceleration = speed * 0.25f;
 
         //Deceleration from breaking
         deceleration += BreakingStrength() * breakPedalPosition;
