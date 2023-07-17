@@ -9,6 +9,8 @@
 using namespace std;
 
 class Car {
+    //friend class Truck;
+
 public:
     Car();
     Car(const Car& other);
@@ -60,9 +62,14 @@ private:
     const bool logPositionEachUpdate = true;
 
     /// <summary>
+    /// Each car has its own log file.  carGeneralLog is for general info about the car.
+    /// </summary>
+    ofstream carGeneralLog;
+
+    /// <summary>
     /// Each car will have its own log file.  Only used if logPositionEachUpdate is true.
     /// </summary>
-    ofstream positionLogFile;
+    ofstream positionLog;
 
 public:
     //Car Model Properties
@@ -71,6 +78,7 @@ public:
     virtual float BreakingStrength();
     virtual float GetMaxTurningAngle();
     virtual float GetAxleDistance();
+    virtual float GetCarWindAndFrictionMultiplier();
     virtual string GetName();
     //Car Model Properties
 
@@ -101,10 +109,12 @@ public:
     void SetGasPedalPosition(float value);
     void SetBreakPedalPosition(float value);
     void SetSteeringWheelPosition(float value);
+    string GetAllInfo();
 
     void DoUpdateLogs();
     void SetupLogs();
     void CleanupLogs();
     void LogPosition();
+    void LogCarInfo(const string& text);
     string GetNameWithId();
 };

@@ -6,7 +6,8 @@
 using namespace std;
 
 map<int, string> carLogTypeNames = {
-	{ CarPositionLog, "CarPosition" }
+	{ CarGeneralLog, "CarGeneralLog" },
+	{ CarPositionLog, "CarPositionLog" }
 };
 
 map<int, string> logTypeNames = {
@@ -44,7 +45,7 @@ ofstream CreateOpenLog(const string& logPath, bool reset = false) {
 #pragma region Public Functions
 
 ofstream CreateOpenCarLog(const int carLogType, const string& carNameWithId) {
-	return CreateOpenLog(GetCarLogFilePath(carLogType, carNameWithId));
+	return CreateOpenLog(GetCarLogFilePath(carLogType, carNameWithId), true);
 }
 ofstream CreateOpenLog(const int logType, bool reset) {
 	return CreateOpenLog(GetLogFilePath(logType), reset);
@@ -78,7 +79,7 @@ void CreateLogFolders() {
 		CloseLog(log);
 	}
 
-	for (int i = CarPositionLog; i < CarLogTypeCount; i++) {
+	for (int i = CarGeneralLog; i < CarLogTypeCount; i++) {
 		//Create a new folder in the log folder for position logs.
 		CreateDirectoryIfNotExists(GetCarLogFolderPath(i));
 	}

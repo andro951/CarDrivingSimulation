@@ -22,19 +22,22 @@ Car::~Car() {
 #pragma region Car Model Properties
 
 float Car::GetGasTankCapacity() {
-    return 20;
+    return 20.0f;
 }
 float Car::AccelerationStrength() {
-    return 50;
+    return 50.0f;
 }
 float Car::BreakingStrength() {
-    return 100;
+    return 100.0f;
 }
 float Car::GetMaxTurningAngle() {
-    return PI / 6;//30 degrees
+    return PI / 6.0f;//30 degrees
 }
 float Car::GetAxleDistance() {
-    return 8;
+    return 8.0f;
+}
+float Car::GetCarWindAndFrictionMultiplier() {
+	return 0.25f;
 }
 string Car::GetName() {
 	return "Car";
@@ -121,7 +124,7 @@ float Car::GetAcceleration(const float secondsSinceLastUpdate) {
         acceleration *= accelerationSign;
 
         //Wind resistance and friction.
-        float deceleration = speed * 0.25f;
+        float deceleration = speed * GetCarWindAndFrictionMultiplier();
 
         //Deceleration from breaking
         deceleration += BreakingStrength() * breakPedalPosition;
@@ -186,6 +189,11 @@ void Car::SetSteeringWheelPosition(float value) {
 void Car::SetFacingDirection(float value) {
     facingDirection = NormalizeAngle(value);
 }
+string Car::GetAllInfo() {
+    return "Speed: " + to_string(GetSpeed()) + ", Position: " + to_string(GetPosition().first) + ", " +
+        to_string(GetPosition().second) + ", Facing Direction: " + to_string(GetFacingDirection()) + "(" +
+        to_string(round(RadiansToDegrees(GetFacingDirection()))) + " deg)";
+}
 
 #pragma endregion
 
@@ -196,20 +204,24 @@ void Car::DoUpdateLogs() {
 		LogPosition();
 }
 void Car::SetupLogs() {
+    carGeneralLog = CreateOpenCarLog(CarGeneralLog, GetNameWithId());
     if (logPositionEachUpdate) {
         //Create a new log file for this car.
-        positionLogFile = CreateOpenCarLog(CarPositionLog, GetNameWithId());
-        Log(positionLogFile, "x1, y1");
+        positionLog = CreateOpenCarLog(CarPositionLog, GetNameWithId());
+        Log(positionLog, "x1, y1");
     }
 }
 void Car::CleanupLogs() {
     if (logPositionEachUpdate) {
         //Close the log file.
-        CloseLog(positionLogFile);
+        CloseLog(positionLog);
     }
 }
 void Car::LogPosition() {
-    Log(positionLogFile, to_string(position.first) + "," + to_string(position.second));
+    Log(positionLog, to_string(position.first) + "," + to_string(position.second));
+}
+void Car::LogCarInfo(const string& text) {
+    Log(carGeneralLog, text);
 }
 string Car::GetNameWithId() {
     return GetName() + "_" + to_string(id);

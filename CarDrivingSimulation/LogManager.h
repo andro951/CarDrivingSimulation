@@ -9,6 +9,7 @@ enum LogType {
 };
 
 enum CarLogType {
+	CarGeneralLog,
 	CarPositionLog,
 	CarLogTypeCount
 };
