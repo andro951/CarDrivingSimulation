@@ -10,7 +10,7 @@ using namespace std;
 Troubeshoot acceleration issues
 Speed needs to be in MPH (3600 seconds / hr)
 Position needs to be in feet (5280 ft/mile)
-After velocity/position units are updated, test max velocity of the car again to about 200 mph
+After speed/position units are updated, test max speed of the car again to about 200 mph
 */
 
 int main() {

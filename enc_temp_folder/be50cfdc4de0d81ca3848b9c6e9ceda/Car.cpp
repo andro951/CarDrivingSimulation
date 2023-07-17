@@ -56,13 +56,13 @@ void Car::Cleanup() {
 void Car::Update(const float secondsSinceLastUpdate) {
     UpdateCarPositionAndFacingDirection(secondsSinceLastUpdate);
 
-    //Update the velocity after the position to have a small amount of lag to help simulate inertia.
+    //Update the speed after the position to have a small amount of lag to help simulate inertia.
     UpdateSpeed(secondsSinceLastUpdate);
 
     DoUpdateLogs();
 }
 void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate) {
-    float distance = velocity * secondsSinceLastUpdate;
+    float distance = speed * secondsSinceLastUpdate;
     float axleDistance = GetAxleDistance();
     float turningAngle = GetTurningAngle();
 
@@ -102,7 +102,7 @@ void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate
 }
 void Car::UpdateSpeed(const float secondsSinceLastUpdate) {
     float acceleration = GetAcceleration(secondsSinceLastUpdate);
-    velocity += acceleration * secondsSinceLastUpdate;
+    speed += acceleration * secondsSinceLastUpdate;
 }
 float Car::GetAcceleration(const float secondsSinceLastUpdate) {
     float acceleration = 0;
@@ -112,10 +112,10 @@ float Car::GetAcceleration(const float secondsSinceLastUpdate) {
 
     //Breaking, wind resistance and friction should only ever cause deceleration.
     //If the car is moving forward and the break pedal is pressed, the car should slow down.
-    //The magnitude of velocity should never increase from breaking.
+    //The magnitude of speed should never increase from breaking.
 
     float speedFromAcceleration = acceleration * secondsSinceLastUpdate;
-    float newSpeedAccelerationOnly = velocity + speedFromAcceleration;
+    float newSpeedAccelerationOnly = speed + speedFromAcceleration;
 
     if (newSpeedAccelerationOnly != 0) {
         float accelerationSign = acceleration >= 0.0f ? 1.0f : -1.0f;
@@ -124,25 +124,23 @@ float Car::GetAcceleration(const float secondsSinceLastUpdate) {
         acceleration *= accelerationSign;
 
         //Wind resistance and friction.
-        float deceleration = velocity * GetCarWindAndFrictionMultiplier();
+        float deceleration = speed * GetCarWindAndFrictionMultiplier();
 
         //Deceleration from breaking
         deceleration += BreakingStrength() * breakPedalPosition;
 
         if (deceleration > acceleration) {
             deceleration -= acceleration;
-            if (velocity < 0)
+            if (speed < 0)
                 deceleration *= -1;
 
             float speedFromDeceleration = deceleration * secondsSinceLastUpdate;
-            if (speedFromDeceleration * -1 > velocity) {
-                acceleration = velocity * -1 / secondsSinceLastUpdate;
+            if (speedFromDeceleration * -1 > speed) {
+                acceleration = speed * -1 / secondsSinceLastUpdate;
             }
             else {
 				acceleration = deceleration;
             }
-
-            acceleration *= accelerationSign;
         }
         else {
             acceleration -= deceleration;
@@ -155,11 +153,8 @@ float Car::GetAcceleration(const float secondsSinceLastUpdate) {
 float Car::GetTurningAngle() {
     return GetMaxTurningAngle() * steeringWheelPosition;
 }
-float Car::GetVelocity() {
-    return velocity;
-}
 float Car::GetSpeed() {
-	return abs(velocity);
+    return speed;
 }
 pair<float, float> Car::GetPosition() {
     return position;
@@ -195,7 +190,7 @@ void Car::SetFacingDirection(float value) {
     facingDirection = NormalizeAngle(value);
 }
 string Car::GetAllInfo() {
-    return "Speed: " + to_string(GetVelocity()) + ", Position: " + to_string(GetPosition().first) + ", " +
+    return "Speed: " + to_string(GetSpeed()) + ", Position: " + to_string(GetPosition().first) + ", " +
         to_string(GetPosition().second) + ", Facing Direction: " + to_string(GetFacingDirection()) + "(" +
         to_string(round(RadiansToDegrees(GetFacingDirection()))) + " deg)";
 }

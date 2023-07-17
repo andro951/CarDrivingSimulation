@@ -21,11 +21,7 @@ private:
     /// 
     /// </summary>
     pair<float, float> position = {0, 0};
-
-    /// <summary>
-    /// How fast the car is moving.  Can be negative if the car is moving backwards.
-    /// </summary>
-    float velocity = 0;
+    float speed = 0;
 
     /// <summary>
     /// <para>Value between 0 and 1.</para>
@@ -103,7 +99,6 @@ public:
     void Update(const float secondsSinceLastUpdate);
     float GetAcceleration(const float secondsSinceLastUpdate);
     float GetTurningAngle();
-    float GetVelocity();
     float GetSpeed();
     pair<float, float> GetPosition();
     float GetFacingDirection();
