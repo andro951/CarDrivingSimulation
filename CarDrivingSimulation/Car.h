@@ -1,11 +1,25 @@
 #pragma once
 #include <utility>
+#include <vector>
+#include <string>
+#include <fstream>
+#include "CarManager.h"
+
+using namespace std;
 
 const float PI = 3.14159265358979323846f;
 
 class Car {
+public:
+    Car();
+    Car(const Car& other);
+    ~Car();
+
 private:
-    std::pair<float, float> position = {0, 0};
+    /// <summary>
+    /// 
+    /// </summary>
+    pair<float, float> position = {0, 0};
     float speed = 0;
 
     /// <summary>
@@ -27,12 +41,27 @@ private:
     float steeringWheelPosition = 0;
 
     /// <summary>
-    /// <para>Angle value between 0 and 2? radians</para>
+    /// <para>Angle value between 0 and 2 pi radians</para>
     /// <para>Represents the angle of the car on the grid.  0 means facing right or East.</para>
     /// </summary>
     float facingDirection = 0;
     bool engineRunning = false;
     bool reverse = false;
+
+    /// <summary>
+    /// Used to identify the car in the simulation.  No cars will have the same id.  The id corresponds to the index of the car in the
+    /// CarDrivingSimulation's cars vector.
+    /// </summary>
+    int id = -1;
+
+
+
+    const bool logPositionEachUpdate = true;
+
+    /// <summary>
+    /// Each car will have its own log file.  Only used if logPositionEachUpdate is true.
+    /// </summary>
+    ofstream positionLogFile;
 
 public:
     //Car Model Properties
@@ -41,6 +70,7 @@ public:
     virtual float BreakingStrength();
     virtual float GetMaxTurningAngle();
     virtual float GetAxleDistance();
+    virtual string GetCarName();
     //Car Model Properties
 
 private:
@@ -48,11 +78,20 @@ private:
     void UpdateSpeed(const float secondsSinceLastUpdate);
 
 public:
+    /// <summary>
+    /// Perform 1 time actions at the beginning of the simulation.
+    /// </summary>
+    void Setup();
+
+    /// <summary>
+    /// Perform 1 time actions at the end of the simulation.
+    /// </summary>
+    void Cleanup();
     void Update(const float secondsSinceLastUpdate);
     float GetAcceleration(const float secondsSinceLastUpdate);
     float GetTurningAngle();
     float GetSpeed();
-    std::pair<float, float> GetPosition();
+    pair<float, float> GetPosition();
     float GetFacingDirection();
     void StartEngine();
     void StopEngine();
@@ -61,4 +100,7 @@ public:
     void SetGasPedalPosition(float value);
     void SetBreakPedalPosition(float value);
     void SetSteeringWheelPosition(float value);
+
+    void LogPosition();
+    string GetLogFileName(const string& logTypeName);
 };

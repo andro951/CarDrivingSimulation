@@ -1,6 +1,24 @@
 #include "Car.h"
+#include <iostream>
+#include <fstream>
+#include <string>
 
-//Car Model Properties
+using namespace std;
+
+Car::Car() {
+    id = carManager.GetCarCount();
+    Setup();
+    carManager.AddCar(*this);
+}
+Car::Car(const Car& other) {
+    id = other.id;
+}
+Car::~Car() {
+	Cleanup();
+}
+
+#pragma region Car Model Properties
+
 float Car::GetGasTankCapacity() {
     return 20;
 }
@@ -16,13 +34,40 @@ float Car::GetMaxTurningAngle() {
 float Car::GetAxleDistance() {
     return 8;
 }
-//Car Model Properties
+string Car::GetCarName() {
+	return "Car";
+}
 
+#pragma endregion
+
+#pragma region Car Functions
+
+void Car::Setup() {
+    if (logPositionEachUpdate) {
+        //Create a new log file for this car.
+        string fileName = GetLogFileName("position");
+        positionLogFile = ofstream(fileName, ios::out | ios::trunc);
+        if (positionLogFile.is_open()) {
+
+            //Positions are logged in the Desmos table format for easy graphing.
+            positionLogFile << "x1, y1\n";
+        }
+    }
+}
+void Car::Cleanup() {
+    if (logPositionEachUpdate && positionLogFile.is_open()) {
+        //Close the log file.
+        positionLogFile.close();
+    }
+}
 void Car::Update(const float secondsSinceLastUpdate) {
     UpdateCarPositionAndFacingDirection(secondsSinceLastUpdate);
 
     //Update the speed after the position to have a small amount of lag to help simulate inertia.
     UpdateSpeed(secondsSinceLastUpdate);
+
+    if (logPositionEachUpdate)
+		LogPosition();
 }
 void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate) {
     float distance = speed * secondsSinceLastUpdate;
@@ -49,8 +94,12 @@ void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate
     float relativeChangeInX = turnRadius * (1 - cos(turnAngle));
 
     //Rotate the relative change in x and y to match the car's facing direction.
-    float cosFacingDirection = cos(facingDirection);
-    float sinFacingDirection = sin(facingDirection);
+    //facingDirection is negative because turning left is positive and turning right is negative.  The steering wheel position is negative for turning left
+    //and positive for turning right.
+    //Subtract Pi / 2 to shift the facing direction 90 from North at facingDirection 0 to East.
+    //Changing it this way matches the standard method of measuring angles in math, where 0 is East and positive angles are counter-clockwise.
+    float cosFacingDirection = cos(-facingDirection - PI / 2);
+    float sinFacingDirection = sin(-facingDirection - PI / 2);
     float changeInX = relativeChangeInX * cosFacingDirection - relativeChangeInY * sinFacingDirection;
     float changeInY = relativeChangeInX * sinFacingDirection + relativeChangeInY * cosFacingDirection;
 
@@ -66,7 +115,7 @@ void Car::UpdateSpeed(const float secondsSinceLastUpdate) {
 float Car::GetAcceleration(const float secondsSinceLastUpdate) {
     float acceleration = 0;
     //Acceleration from gas pedal
-    if (engineRunning)
+    if (engineRunning && gasPedalPosition > 0.0f)//TODO: Check if gas tank not empty.
         acceleration += AccelerationStrength() * gasPedalPosition;
 
     //Breaking, wind resistance and friction should only ever cause deceleration.
@@ -115,7 +164,7 @@ float Car::GetTurningAngle() {
 float Car::GetSpeed() {
     return speed;
 }
-std::pair<float, float> Car::GetPosition() {
+pair<float, float> Car::GetPosition() {
     return position;
 }
 float Car::GetFacingDirection() {
@@ -145,3 +194,19 @@ void Car::SetSteeringWheelPosition(float value) {
     if (value >= -1 && value <= 1)
         steeringWheelPosition = value;
 }
+
+#pragma endregion
+
+#pragma region Logging and Testing
+
+void Car::LogPosition() {
+    if (!positionLogFile.is_open())
+        return;
+
+    positionLogFile << to_string(position.first) + "," + to_string(position.second) << endl;
+}
+string Car::GetLogFileName(const string& logTypeName) {
+    return "log_" + GetCarName() + "_" + to_string(id) + "_" + logTypeName + ".txt";
+}
+
+#pragma endregion
