@@ -1,6 +1,14 @@
 #include <iostream>
 #include "Car.h"
 
+/*TODO:
+Troubeshoot acceleration issues
+Speed needs to be in MPH (3600 seconds / hr)
+Position needs to be in feet (5280 ft/mile)
+After speed/position units are updated, test max speed of the car again to about 200 mph
+Make a new overridable getter variable for windAndFriction()
+*/
+
 int main() {
     Car car;
     car.StartEngine();
