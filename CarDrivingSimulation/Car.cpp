@@ -184,7 +184,7 @@ void Car::SetSteeringWheelPosition(float value) {
         steeringWheelPosition = value;
 }
 void Car::SetFacingDirection(float value) {
-    value = NormalizeAngle(value);
+    facingDirection = NormalizeAngle(value);
 }
 
 #pragma endregion

@@ -12,3 +12,7 @@ float NormalizeAngle(float angle) {
 
 	return normalizedAngle;
 }
+
+float RadiansToDegrees(float angle) {
+	return angle * 180 / PI;
+}

@@ -11,3 +11,5 @@ const float PI = 3.14159265358979323846f;
 /// <param name="angle"></param>
 /// <returns></returns>
 float NormalizeAngle(float angle);
+
+float RadiansToDegrees(float radians);

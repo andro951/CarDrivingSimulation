@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Car.h"
 #include "CarManager.h"
+#include "CarMath.h"
 
 using namespace std;
 
@@ -10,7 +11,6 @@ Speed needs to be in MPH (3600 seconds / hr)
 Position needs to be in feet (5280 ft/mile)
 After speed/position units are updated, test max speed of the car again to about 200 mph
 Make a new overridable getter variable for windAndFriction()
-facingDirection is not resetting to [0, 2 pi].
 */
 
 int main() {
@@ -26,7 +26,7 @@ int main() {
     for (int i = 0; i < 100; i++) {
 		car.Update(tickInterval);
 		cout << "Seconds: " << seconds << ", Speed: " << car.GetSpeed() << ", Position: " << car.GetPosition().first << ", " << car.GetPosition().second
-            << ", Facing Direction: " << car.GetFacingDirection() << endl;
+            << ", Facing Direction: " << car.GetFacingDirection() << "(" << round(RadiansToDegrees(car.GetFacingDirection())) << " deg)" << endl;
 
         seconds += tickInterval;
 	}
@@ -35,7 +35,7 @@ int main() {
     for (int i = 0; i < 100; i++) {
         car.Update(tickInterval);
         cout << "Seconds: " << seconds << ", Speed: " << car.GetSpeed() << ", Position: " << car.GetPosition().first << ", " << car.GetPosition().second
-            << ", Facing Direction: " << car.GetFacingDirection() << endl;
+            << ", Facing Direction: " << car.GetFacingDirection() << "(" << round(RadiansToDegrees(car.GetFacingDirection())) << " deg)" << endl;
 
         seconds += tickInterval;
     }
