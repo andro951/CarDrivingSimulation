@@ -115,39 +115,39 @@ float Car::GetAcceleration(const float secondsSinceLastUpdate) {
     //The magnitude of velocity should never increase from breaking.
 
     float speedFromAcceleration = acceleration * secondsSinceLastUpdate;
-    float newSpeedAccelerationOnly = velocity + speedFromAcceleration;
+    float newVelocityAccelerationOnly = velocity + speedFromAcceleration;
 
-    if (newSpeedAccelerationOnly != 0) {
+    if (newVelocityAccelerationOnly != 0) {
         float accelerationSign = acceleration >= 0.0f ? 1.0f : -1.0f;
 
         //Invert acceleration if acceleration is negative.
+        //Making acceleration positive makes the math easier.
+        //deceleration is always going to be positive.
         acceleration *= accelerationSign;
 
+        //Since we are calculating deceleration with both acceleration and deceleration being positive, we use speed instead of velocity.
+        float speed = GetSpeed();
+
         //Wind resistance and friction.
-        float deceleration = velocity * GetCarWindAndFrictionMultiplier();
+        float deceleration = speed * GetCarWindAndFrictionMultiplier();
 
         //Deceleration from breaking
         deceleration += BreakingStrength() * breakPedalPosition;
 
+        //If deceleration is greater than acceleration, then the car is slowing down.
         if (deceleration > acceleration) {
             deceleration -= acceleration;
-            if (velocity < 0)
-                deceleration *= -1;
+            acceleration = 0;
 
+            //Check if the deceleration will cause the car to reverse directions.
+            //If it will, reduce the deceleration to match the speed so that car stops instead of reversing.
             float speedFromDeceleration = deceleration * secondsSinceLastUpdate;
-            if (speedFromDeceleration * -1 > velocity) {
-                acceleration = velocity * -1 / secondsSinceLastUpdate;
-            }
-            else {
-				acceleration = deceleration;
-            }
+            if (speedFromDeceleration > speed)
+                deceleration = speed / secondsSinceLastUpdate;
+        }
 
-            acceleration *= accelerationSign;
-        }
-        else {
-            acceleration -= deceleration;
-            acceleration *= accelerationSign;
-        }
+        acceleration -= deceleration;
+        acceleration *= accelerationSign;
     }
 
     return acceleration;

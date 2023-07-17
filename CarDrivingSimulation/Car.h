@@ -104,6 +104,10 @@ public:
     float GetAcceleration(const float secondsSinceLastUpdate);
     float GetTurningAngle();
     float GetVelocity();
+
+    /// <summary>
+    /// Absolute value of velocity.
+    /// </summary>
     float GetSpeed();
     pair<float, float> GetPosition();
     float GetFacingDirection();

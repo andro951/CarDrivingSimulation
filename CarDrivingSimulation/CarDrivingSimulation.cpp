@@ -41,6 +41,7 @@ int main() {
 	}
 
     car.SetGasPedalPosition(0);
+    car2.SetGasPedalPosition(0);
     for (int i = 0; i < 100; i++) {
         car.Update(tickInterval);
         string carInfo = "Seconds: " + to_string(seconds) + ", " + car.GetAllInfo();
