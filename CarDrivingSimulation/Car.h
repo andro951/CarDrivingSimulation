@@ -4,10 +4,9 @@
 #include <string>
 #include <fstream>
 #include "CarManager.h"
+#include "CarMath.h"
 
 using namespace std;
-
-const float PI = 3.14159265358979323846f;
 
 class Car {
 public:
@@ -45,6 +44,8 @@ private:
     /// <para>Represents the angle of the car on the grid.  0 means facing right or East.</para>
     /// </summary>
     float facingDirection = 0;
+    void SetFacingDirection(float value);
+
     bool engineRunning = false;
     bool reverse = false;
 
@@ -70,7 +71,7 @@ public:
     virtual float BreakingStrength();
     virtual float GetMaxTurningAngle();
     virtual float GetAxleDistance();
-    virtual string GetCarName();
+    virtual string GetName();
     //Car Model Properties
 
 private:
@@ -101,6 +102,9 @@ public:
     void SetBreakPedalPosition(float value);
     void SetSteeringWheelPosition(float value);
 
+    void DoUpdateLogs();
+    void SetupLogs();
+    void CleanupLogs();
     void LogPosition();
-    string GetLogFileName(const string& logTypeName);
+    string GetNameWithId();
 };

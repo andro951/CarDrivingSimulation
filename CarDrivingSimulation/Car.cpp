@@ -1,4 +1,5 @@
 #include "Car.h"
+#include "LogManager.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -6,6 +7,7 @@
 using namespace std;
 
 Car::Car() {
+    CarManager& carManager = CarManager::GetInstance();
     id = carManager.GetCarCount();
     Setup();
     carManager.AddCar(*this);
@@ -34,7 +36,7 @@ float Car::GetMaxTurningAngle() {
 float Car::GetAxleDistance() {
     return 8;
 }
-string Car::GetCarName() {
+string Car::GetName() {
 	return "Car";
 }
 
@@ -43,22 +45,10 @@ string Car::GetCarName() {
 #pragma region Car Functions
 
 void Car::Setup() {
-    if (logPositionEachUpdate) {
-        //Create a new log file for this car.
-        string fileName = GetLogFileName("position");
-        positionLogFile = ofstream(fileName, ios::out | ios::trunc);
-        if (positionLogFile.is_open()) {
-
-            //Positions are logged in the Desmos table format for easy graphing.
-            positionLogFile << "x1, y1\n";
-        }
-    }
+    SetupLogs();
 }
 void Car::Cleanup() {
-    if (logPositionEachUpdate && positionLogFile.is_open()) {
-        //Close the log file.
-        positionLogFile.close();
-    }
+    CleanupLogs();
 }
 void Car::Update(const float secondsSinceLastUpdate) {
     UpdateCarPositionAndFacingDirection(secondsSinceLastUpdate);
@@ -66,8 +56,7 @@ void Car::Update(const float secondsSinceLastUpdate) {
     //Update the speed after the position to have a small amount of lag to help simulate inertia.
     UpdateSpeed(secondsSinceLastUpdate);
 
-    if (logPositionEachUpdate)
-		LogPosition();
+    DoUpdateLogs();
 }
 void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate) {
     float distance = speed * secondsSinceLastUpdate;
@@ -98,15 +87,15 @@ void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate
     //and positive for turning right.
     //Subtract Pi / 2 to shift the facing direction 90 from North at facingDirection 0 to East.
     //Changing it this way matches the standard method of measuring angles in math, where 0 is East and positive angles are counter-clockwise.
-    float cosFacingDirection = cos(-facingDirection - PI / 2);
-    float sinFacingDirection = sin(-facingDirection - PI / 2);
+    float cosFacingDirection = cos(-GetFacingDirection() - PI / 2);
+    float sinFacingDirection = sin(-GetFacingDirection() - PI / 2);
     float changeInX = relativeChangeInX * cosFacingDirection - relativeChangeInY * sinFacingDirection;
     float changeInY = relativeChangeInX * sinFacingDirection + relativeChangeInY * cosFacingDirection;
 
     //Update the car's position and facing direction.
     position.first += changeInX;
     position.second += changeInY;
-    facingDirection += turnAngle;
+    SetFacingDirection(GetFacingDirection() + turnAngle);
 }
 void Car::UpdateSpeed(const float secondsSinceLastUpdate) {
     float acceleration = GetAcceleration(secondsSinceLastUpdate);
@@ -194,19 +183,36 @@ void Car::SetSteeringWheelPosition(float value) {
     if (value >= -1 && value <= 1)
         steeringWheelPosition = value;
 }
+void Car::SetFacingDirection(float value) {
+    value = NormalizeAngle(value);
+}
 
 #pragma endregion
 
 #pragma region Logging and Testing
 
-void Car::LogPosition() {
-    if (!positionLogFile.is_open())
-        return;
-
-    positionLogFile << to_string(position.first) + "," + to_string(position.second) << endl;
+void Car::DoUpdateLogs() {
+	if (logPositionEachUpdate)
+		LogPosition();
 }
-string Car::GetLogFileName(const string& logTypeName) {
-    return "log_" + GetCarName() + "_" + to_string(id) + "_" + logTypeName + ".txt";
+void Car::SetupLogs() {
+    if (logPositionEachUpdate) {
+        //Create a new log file for this car.
+        positionLogFile = CreateOpenCarLog(CarPositionLog, GetNameWithId());
+        Log(positionLogFile, "x1, y1");
+    }
+}
+void Car::CleanupLogs() {
+    if (logPositionEachUpdate) {
+        //Close the log file.
+        CloseLog(positionLogFile);
+    }
+}
+void Car::LogPosition() {
+    Log(positionLogFile, to_string(position.first) + "," + to_string(position.second));
+}
+string Car::GetNameWithId() {
+    return GetName() + "_" + to_string(id);
 }
 
 #pragma endregion

@@ -130,6 +130,7 @@
     <ClCompile Include="Car.cpp" />
     <ClCompile Include="CarDrivingSimulation.cpp" />
     <ClCompile Include="CarManager.cpp" />
+    <ClCompile Include="CarMath.cpp" />
     <ClCompile Include="FilesLibrary.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="Truck.cpp" />
@@ -137,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="Car.h" />
     <ClInclude Include="CarManager.h" />
+    <ClInclude Include="CarMath.h" />
     <ClInclude Include="FilesLibrary.h" />
     <ClInclude Include="LogManager.h" />
     <ClInclude Include="Truck.h" />

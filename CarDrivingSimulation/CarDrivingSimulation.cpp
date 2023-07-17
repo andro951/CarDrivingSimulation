@@ -14,8 +14,10 @@ facingDirection is not resetting to [0, 2 pi].
 */
 
 int main() {
-    carManager = CarManager();
+    //Create the car manager so that it runs it's setup function.
+    CarManager::GetInstance();
     Car car;
+    Car car2;
     car.StartEngine();
     car.SetGasPedalPosition(1);
     car.SetSteeringWheelPosition(1);
