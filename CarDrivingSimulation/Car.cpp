@@ -68,16 +68,20 @@ void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate
     float axleDistance = GetAxleDistance();
     float turningAngle = GetTurningAngle();
 
+    //Multiplier to manually adjust the turning angle.  The turning angle calculation is likely off from reality somewhere, so introducing this
+    //multiplier to help compensate for that.
+    float turningMultiplier = 1/PI;
+
     //When a car turns, it turns in a circle.
     //turnCircumference is the circumference of that circle.
-    float turnCircumference = axleDistance * 2 * PI / turningAngle;
+    float turnCircumference = axleDistance * 2.0f * PI / turningAngle * turningMultiplier;
 
     //turnFraction is the fraction of the whole turn circle that the car turns in this update tick.
     float turnFraction = distance / turnCircumference;
 
     //turnAngle is the angle at the center of the turn circle.  The right triangle is formed with the hypotenuse from the center of the circle
     //to the car's new position, and the adjacent side is the car's old position minus the relative change in x.
-    float turnAngle = turnFraction * 2 * PI;
+    float turnAngle = turnFraction * 2.0f * PI;
 
     //turnRadius is the radius of the turn circle.
     float turnRadius = turnCircumference / PI;
@@ -85,15 +89,15 @@ void Car::UpdateCarPositionAndFacingDirection(const float secondsSinceLastUpdate
     //relativeChangeInX and relativeChangeInY are the change in x and y relative to the car's old position.
     //They are calculated assuming the car's facing direction is 0, so they must be rotated to match the car's actual facing direction.
     float relativeChangeInY = sin(turnAngle) * turnRadius;
-    float relativeChangeInX = turnRadius * (1 - cos(turnAngle));
+    float relativeChangeInX = turnRadius * (1.0f - cos(turnAngle));
 
     //Rotate the relative change in x and y to match the car's facing direction.
     //facingDirection is negative because turning left is positive and turning right is negative.  The steering wheel position is negative for turning left
     //and positive for turning right.
     //Subtract Pi / 2 to shift the facing direction 90 from North at facingDirection 0 to East.
     //Changing it this way matches the standard method of measuring angles in math, where 0 is East and positive angles are counter-clockwise.
-    float cosFacingDirection = cos(-GetFacingDirection() - PI / 2);
-    float sinFacingDirection = sin(-GetFacingDirection() - PI / 2);
+    float cosFacingDirection = cos(-GetFacingDirection() - PI / 2.0f);
+    float sinFacingDirection = sin(-GetFacingDirection() - PI / 2.0f);
     float changeInX = relativeChangeInX * cosFacingDirection - relativeChangeInY * sinFacingDirection;
     float changeInY = relativeChangeInX * sinFacingDirection + relativeChangeInY * cosFacingDirection;
 
