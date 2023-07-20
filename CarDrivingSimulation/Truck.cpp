@@ -18,6 +18,9 @@ float Truck::GetAxleDistance() {
 float Truck::GetCarWindAndFrictionMultiplier() {
 	return 0.5f;
 }
+float Truck::GetWeight() {
+	return 5000.0f;
+}
 string Truck::GetName() {
 	return "Truck";
 }

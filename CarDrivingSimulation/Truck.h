@@ -1,7 +1,7 @@
 #pragma once
-#include "Car.h"
+#include "Vehicle.h"
 
-class Truck : public Car {
+class Truck : public Vehicle {
 private:
 
 
@@ -12,5 +12,6 @@ public:
 	float GetMaxTurningAngle() override;
 	float GetAxleDistance() override;
 	float GetCarWindAndFrictionMultiplier() override;
+	float GetWeight() override;
 	string GetName() override;
 };

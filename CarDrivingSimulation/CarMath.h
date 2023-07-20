@@ -1,7 +1,11 @@
 #pragma once
 #include <cmath>
 
-const float PI = 3.14159265358979323846f;
+extern const float PI;
+
+extern float typicalEnergyContentOfGas;//MJ/L
+extern float whatHoursPerMegaJoul;
+extern float litersPerGallon;
 
 /// <summary>
 /// Normalize the angle to the range [0, 2 pi] radians.
@@ -11,3 +15,6 @@ const float PI = 3.14159265358979323846f;
 float NormalizeAngle(float angle);
 
 float RadiansToDegrees(float radians);
+
+float WhattHoursToGallonsOfGas(float whattHours);
+float GallonsOfGasToWattHours(float gallonsOfGas);

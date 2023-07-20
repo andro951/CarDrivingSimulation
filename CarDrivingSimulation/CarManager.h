@@ -1,14 +1,14 @@
 #pragma once
 #include <vector>
-#include "Car.h"
+#include "Vehicle.h"
 
 using namespace std;
 
-class Car;
+class Vehicle;
 
 class CarManager {
 private:
-	vector<Car> cars;
+	vector<unique_ptr<Vehicle>> cars;
 	CarManager();
 	CarManager(const CarManager& other) = delete;
 	CarManager& operator=(const CarManager& other) = delete;
@@ -24,8 +24,19 @@ public:
 	
 	void Setup();
 	void Cleanup();
-	void AddCar(Car& car);
 	int GetCarCount() const;
-};
+	template <typename VehicleType>
+	VehicleType& CreateVehicle() {
+		//Make a smart pointer (unique_ptr).  unique_ptr can not be copied, only moved.
+		unique_ptr<Vehicle> vehicle = make_unique<VehicleType>();
 
-//extern CarManager carManager;
+		//Move the smart pointer into the vector.
+		cars.push_back(std::move(vehicle));
+
+		//Get a reference to the Vehicle object in the vector.
+		VehicleType& vehicleType = static_cast<VehicleType&>(*cars.back());
+		vehicleType.Setup();
+
+		return vehicleType;
+	}
+};

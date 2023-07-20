@@ -13,48 +13,117 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Utilities">
+      <UniqueIdentifier>{4f78397e-c744-40c9-a891-655ccff5bad9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Interfaces">
+      <UniqueIdentifier>{1047ff78-1f56-436d-80ba-b2ecc3789784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utilities">
+      <UniqueIdentifier>{1edb3996-0fa7-4684-9c77-c04a490f8bae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CarTypes">
+      <UniqueIdentifier>{b4e89494-c869-417d-9b14-cea6b8f84109}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CarTypes">
+      <UniqueIdentifier>{4085863c-0a94-4d0d-b8cb-b0f68e6789f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CarTypes\Truck">
+      <UniqueIdentifier>{4ebf8d06-78cd-4237-891f-28ec8a66fbb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CarTypes\Truck">
+      <UniqueIdentifier>{bea737ee-0e64-4313-ad66-2f6bdc5cda5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CarTypes\Car">
+      <UniqueIdentifier>{8e18384f-99ef-4a00-99e7-bdfdcfd722e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CarTypes\Car">
+      <UniqueIdentifier>{5dc48f8e-1a32-4e48-9cea-9211f98ec34a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CarDrivingSimulation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Car.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Truck.cpp">
+    <ClCompile Include="Vehicle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CarManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FilesLibrary.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="LogManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="FilesLibrary.cpp">
+      <Filter>Source Files\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="CarMath.cpp">
+      <Filter>Source Files\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="SimulationSystem.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Truck.cpp">
+      <Filter>Source Files\CarTypes\Truck</Filter>
+    </ClCompile>
+    <ClCompile Include="Car.cpp">
+      <Filter>Source Files\CarTypes\Car</Filter>
+    </ClCompile>
+    <ClCompile Include="ElectricCar.cpp">
+      <Filter>Source Files\CarTypes\Car</Filter>
+    </ClCompile>
+    <ClCompile Include="GasCar.cpp">
+      <Filter>Source Files\CarTypes\Car</Filter>
+    </ClCompile>
+    <ClCompile Include="ElectricTruck.cpp">
+      <Filter>Source Files\CarTypes\Truck</Filter>
+    </ClCompile>
+    <ClCompile Include="GasTruck.cpp">
+      <Filter>Source Files\CarTypes\Truck</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Car.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Truck.h">
+    <ClInclude Include="Vehicle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CarManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CarMath.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
     <ClInclude Include="FilesLibrary.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GasVehicle.h">
+      <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="LogManager.h">
+      <Filter>Header Files\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="SimulationSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CarMath.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="ElectricVehicle.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Truck.h">
+      <Filter>Header Files\CarTypes\Truck</Filter>
+    </ClInclude>
+    <ClInclude Include="GasTruck.h">
+      <Filter>Header Files\CarTypes\Truck</Filter>
+    </ClInclude>
+    <ClInclude Include="ElectricTruck.h">
+      <Filter>Header Files\CarTypes\Truck</Filter>
+    </ClInclude>
+    <ClInclude Include="Car.h">
+      <Filter>Header Files\CarTypes\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="GasCar.h">
+      <Filter>Header Files\CarTypes\Car</Filter>
+    </ClInclude>
+    <ClInclude Include="ElectricCar.h">
+      <Filter>Header Files\CarTypes\Car</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

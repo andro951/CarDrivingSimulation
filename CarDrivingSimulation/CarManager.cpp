@@ -22,9 +22,6 @@ void CarManager::Setup() {
 void CarManager::Cleanup() {
 	//Not used yet.
 }
-void CarManager::AddCar(Car& car) {
-	cars.push_back(car);
-}
 int CarManager::GetCarCount() const {
 	return cars.size();
 }
