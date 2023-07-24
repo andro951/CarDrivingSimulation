@@ -17,6 +17,10 @@ ElectricVehicle
 
 GasVehicle
     MilesRemaining()
+
+Need to fill up each car or set their storedEnergy to something at the beginning of main()
+
+Create a menu for controlling the vehicles that allows for using each of the controls and allows them to wait (update) for some amount of time.
 */
 
 int main() {
